@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NorvaCart – Online Shop</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f5f5f7;
+}
+
+header {
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.shop {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.product {
+  background: #fff;
+  border-radius: 18px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.product img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+select, button {
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #000;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.paypal-btn {
+  background: #ffc439;
+  color: #000;
+}
+
+.cart {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background: #fff;
+  padding: 15px;
+  border-left: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.cart h3 {
+  margin-top: 0;
+}
+
+footer {
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+footer a {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+section {
+  background: #fff;
+  padding: 30px;
+  margin-top: 20px;
+}
+
+/* Floating Buttons */
+.floating {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.floating a {
+  background: #000;
+  color: #fff;
+  padding: 14px;
+  border-radius: 50%;
+  text-decoration: none;
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<header>NorvaCart – Trend Online Shop</header>
+
+<div class="shop">
+
+<!-- PRODUKT 1 – HANDYHÜLLE -->
+<div class="product">
+  <img id="caseImg" src="images/case_iphone11_black.jpg">
+  <h3>MagSafe Handyhülle</h3>
+  <p class="price">8,99 €</p>
+
+  <select id="caseColor" onchange="updateCase()">
+    <option value="black">Schwarz</option>
+    <option value="white">Weiß</option>
+    <option value="green">Grün</option>
+    <option value="gray">Grau</option>
+    <option value="red">Rot</option>
+  </select>
+
+  <select id="caseModel" onchange="updateCase()">
+    <option value="iphone11">iPhone 11</option>
+    <option value="iphone12">iPhone 12</option>
+    <option value="iphone13">iPhone 13</option>
+    <option value="iphone14">iPhone 14</option>
+    <option value="iphone15">iPhone 15</option>
+  </select>
+
+  <button onclick="addToCart('MagSafe Handyhülle', 8.99)">In den Warenkorb</button>
+</div>
+
+<!-- PRODUKT 2 – AIRPODS -->
+<div class="product">
+  <img id="airpodsImg" src="images/airpods_airpods2_white.jpg">
+  <h3>Apple AirPods</h3>
+  <p class="price">29,99 €</p>
+
+  <select id="airpodsColor" onchange="updateAirpods()">
+    <option value="white">Weiß</option>
+    <option value="black">Schwarz</option>
+    <option value="green">Grün</option>
+    <option value="gray">Grau</option>
+    <option value="red">Rot</option>
+  </select>
+
+  <select id="airpodsModel" onchange="updateAirpods()">
+    <option value="airpods2">AirPods 2</option>
+    <option value="airpods3">AirPods 3</option>
+    <option value="airpodspro">AirPods Pro</option>
+    <option value="airpodsmax">AirPods Max</option>
+  </select>
+
+  <button onclick="addToCart('Apple AirPods', 29.99)">In den Warenkorb</button>
+</div>
+
+</div>
+
+<!-- WARENKORB -->
+<div class="cart">
+  <h3>🛒 Warenkorb</h3>
+  <div id="cartItems"></div>
+  <p><strong>Gesamt: <span id="total">0.00</span> €</strong></p>
+
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="patrikempfang@gmail.com">
+    <input type="hidden" name="item_name" value="NorvaCart Bestellung">
+    <input type="hidden" name="amount" id="paypalAmount">
+    <input type="hidden" name="currency_code" value="EUR">
+    <input type="submit" value="Mit PayPal bezahlen" class="paypal-btn">
+  </form>
+
+  <p>📦 Lieferzeit: 5–10 Werktage</p>
+</div>
+
+<!-- FLOATING BUTTONS -->
+<div class="floating">
+  <a href="mailto:patrikempfang@gmail.com">✉</a>
+  <a href="#">🎵</a>
+</div>
+
+<footer>
+  <a href="#impressum">Impressum</a> | 
+  <a href="#datenschutz">Datenschutz</a>
+</footer>
+
+<!-- IMPRESSUM -->
+<section id="impressum">
+  <h2>Impressum</h2>
+  <p><strong>Angaben gemäß § 5 TMG</strong></p>
+  <p>NorvaCart<br>Online-Shop für Trendprodukte</p>
+  <p>E-Mail: <a href="mailto:patrikempfang@gmail.com">patrikempfang@gmail.com</a></p>
+  <p>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: NorvaCart</p>
+</section>
+
+<!-- DATENSCHUTZ -->
+<section id="datenschutz">
+  <h2>Datenschutzerklärung</h2>
+  <p>Personenbezogene Daten werden nur im technisch notwendigen Umfang erhoben.</p>
+  <p>Die Zahlungsabwicklung erfolgt über PayPal.</p>
+  <p>Kontakt: <a href="mailto:patrikempfang@gmail.com">patrikempfang@gmail.com</a></p>
+</section>
+
+<script>
+let total = 0;
+
+function addToCart(name, price) {
+  total += price;
+  document.getElementById("cartItems").innerHTML += `<p>${name} – ${price.toFixed(2)} €</p>`;
+  document.getElementById("total").innerText = total.toFixed(2);
+  document.getElementById("paypalAmount").value = total.toFixed(2);
+}
+
+function updateCase() {
+  const c = caseColor.value;
+  const m = caseModel.value;
+  caseImg.src = `images/case_${m}_${c}.jpg`;
+}
+
+function updateAirpods() {
+  const c = airpodsColor.value;
+  const m = airpodsModel.value;
+  airpodsImg.src = `images/airpods_${m}_${c}.jpg`;
+}
+</script>
+
+</body>
+</html>
